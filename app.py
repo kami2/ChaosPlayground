@@ -12,3 +12,6 @@ def main():
 def test_area():
     return "Chaotic evil"
 
+
+if __name__ == '__main__':
+    app.run()
