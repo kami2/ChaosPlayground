@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return "Alive"
+    enter_text = "Do something..."
+    results = render_template("index.html", enter_text=enter_text)
+    return results
 
 
 @app.route("/test")
