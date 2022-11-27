@@ -2,6 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
+# If file name is app.py or main.py then project will not start on vercel
 
 @app.route("/")
 def main():
