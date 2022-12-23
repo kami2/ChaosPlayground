@@ -1,5 +1,8 @@
 from flask import Flask, render_template
+import sys
+from apps.test_import import TestImport
 
+sys.path.append('../')
 app = Flask(__name__)
 
 # If file name is app.py or main.py then project will not start on vercel
@@ -14,7 +17,8 @@ def main():
 
 @app.route("/test")
 def test_area():
-    return "Chaotic evil"
+    TestImport("Did i make mistake?")
+    return "test import"
 
 
 if __name__ == '__main__':
