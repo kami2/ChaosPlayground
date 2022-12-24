@@ -1,20 +1,18 @@
 import sqlalchemy as db
 import logging
-import configparser
-
-config = configparser.ConfigParser()
-config.read("../config.ini")
+from helpers.config_helper import ConfigHelper
 
 logging.basicConfig(level=logging.DEBUG)
+config = ConfigHelper()
 
 
 class DatabaseHelper:
 
     def __init__(self):
-        self._engine = db.create_engine(f'mysql+pymysql://{config["DATABASE_CONNECTION"]["Login"]}:'
-                                        f'{config["DATABASE_CONNECTION"]["Password"]}@'
-                                        f'{config["DATABASE_CONNECTION"]["Host"]}/'
-                                        f'{config["DATABASE_CONNECTION"]["DatabaseName"]}')
+        self._engine = db.create_engine(f'mysql+pymysql://{config.get_config("DATABASE_CONNECTION", "Login")}:'
+                                        f'{config.get_config("DATABASE_CONNECTION", "Password")}@'
+                                        f'{config.get_config("DATABASE_CONNECTION", "Host")}/'
+                                        f'{config.get_config("DATABASE_CONNECTION", "DatabaseName")}')
         self._conn = self._engine.connect()
 
     def test_connection(self):
@@ -28,3 +26,7 @@ class DatabaseHelper:
             logging.error("Cannot connect to db")
             raise e
 
+
+if __name__ == '__main__':
+    conn = DatabaseHelper()
+    conn.test_connection()
