@@ -5,6 +5,8 @@ import configparser
 config = configparser.ConfigParser()
 config.read("../config.ini")
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 class DatabaseHelper:
 
@@ -26,8 +28,3 @@ class DatabaseHelper:
             logging.error("Cannot connect to db")
             raise e
 
-
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    connect = DatabaseHelper()
-    connect.test_connection()

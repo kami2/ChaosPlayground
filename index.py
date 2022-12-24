@@ -11,5 +11,11 @@ def main():
     return results
 
 
+@app.route("/test")
+def test_area():
+    TestImport("Did i make mistake?")
+    return "test import"
+
+
 if __name__ == '__main__':
     app.run()
