@@ -1,5 +1,4 @@
 Flask
 sqlalchemy
-pandas
 PyMySQL
 PyMySQL[rsa]
