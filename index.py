@@ -1,8 +1,6 @@
 from flask import Flask, render_template
-import sys
 from apps.test_import import TestImport
 
-sys.path.append('../')
 app = Flask(__name__)
 
 # If file name is app.py or main.py then project will not start on vercel
