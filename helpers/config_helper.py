@@ -1,16 +1,23 @@
-import configparser
+import os
+from dotenv import load_dotenv
+import logging
 
-DEFAULT_CONFIG = "../config.ini"
+logging.basicConfig(level=logging.DEBUG)
+DEFAULT_CONFIG = "../.env"
 
 
 class ConfigHelper:
 
     def __init__(self, config_file: str = None):
-        if config_file is None:
-            config_file = DEFAULT_CONFIG
+        self.config = load_dotenv(DEFAULT_CONFIG)
+        if config_file is not None:
+            logging.info(f"Get config from: {config_file}")
+            self.config = load_dotenv(config_file)
 
-        self.config = configparser.ConfigParser()
-        self.config.read(config_file)
-
-    def get_config(self, config_group: str, key: str):
-        return self.config[config_group][key]
+    def get_config(self, key: str):
+        if self.config:
+            logging.info(f"Get variable {key} from config path: {DEFAULT_CONFIG}")
+            return os.environ.get(key)
+        else:
+            logging.info(f"Get environment variable {key}")
+            return os.environ.get(key)

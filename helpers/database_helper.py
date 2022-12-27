@@ -1,6 +1,5 @@
 import sqlalchemy as db
 import logging
-import os
 from helpers.config_helper import ConfigHelper
 
 logging.basicConfig(level=logging.DEBUG)
@@ -10,10 +9,10 @@ config = ConfigHelper()
 class DatabaseHelper:
 
     def __init__(self):
-        self._engine = db.create_engine(f'mysql+pymysql://{os.environ.get("Login")}:'
-                                        f'{os.environ.get("Password")}@'
-                                        f'{os.environ.get("Host")}/'
-                                        f'{os.environ.get("DatabaseName")}')
+        self._engine = db.create_engine(f'mysql+pymysql://{config.get_config("MYSQL_DB_LOGIN")}:'
+                                        f'{config.get_config("MYSQL_DB_PASSWORD")}@'
+                                        f'{config.get_config("MYSQL_DB_HOST")}/'
+                                        f'{config.get_config("MYSQL_DB_NAME")}')
         self._conn = self._engine.connect()
 
     def test_connection(self):

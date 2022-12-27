@@ -2,3 +2,4 @@ Flask
 sqlalchemy
 PyMySQL
 PyMySQL[rsa]
+python-dotenv
