@@ -3,7 +3,10 @@ from dotenv import load_dotenv
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
-DEFAULT_CONFIG = "../.env"
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_NAME = ".env"
+DEFAULT_CONFIG = fr"{ROOT_DIR}\{CONFIG_NAME}"
 
 
 class ConfigHelper:
@@ -16,7 +19,7 @@ class ConfigHelper:
 
     def get_config(self, key: str):
         if self.config:
-            logging.info(f"Get variable {key} from config path: {DEFAULT_CONFIG}")
+            logging.info(f"Get variable {key} from config: {CONFIG_NAME}")
             return os.environ.get(key)
         else:
             logging.info(f"Get environment variable {key}")

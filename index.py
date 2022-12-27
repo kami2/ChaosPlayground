@@ -1,5 +1,3 @@
-import logging
-
 from flask import Flask, render_template
 from apps.test_import import TestImport
 from helpers.database_helper import DatabaseHelper
