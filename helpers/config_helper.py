@@ -2,8 +2,6 @@ import os
 from dotenv import load_dotenv
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
-
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_NAME = ".env"
 DEFAULT_CONFIG = fr"{ROOT_DIR}\{CONFIG_NAME}"
