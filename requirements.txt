@@ -3,3 +3,4 @@ sqlalchemy
 PyMySQL
 PyMySQL[rsa]
 python-dotenv
+openai
