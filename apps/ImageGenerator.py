@@ -16,3 +16,6 @@ class ImageGenerator:
 
     def get_image_url(self):
         return self.image['data'][0]['url']
+
+    def create_image_variation(self, image: str, prompt: str, size: str = "1024x1024"):
+        return self.client.Image.create_variation(prompt=prompt, n=1, size=size, image=open(image, "rb"))
