@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 from apps.test_import import TestImport
 from helpers.database_helper import DatabaseHelper
 from apps.ImageGenerator import ImageGenerator
+from helpers.request_helper import api_required
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler()])
@@ -13,6 +14,18 @@ def main():
     enter_text = "Do something..."
     results = render_template("index.html", enter_text=enter_text)
     return results
+
+
+@app.route("/hello", methods=['POST'])
+@api_required
+def hello():
+    try:
+        if "name" in request.json and request.json['name']:
+            return f"Hello {request.json['name']}"
+        else:
+            return "Please provide your name"
+    except Exception as e:
+        return f"ERROR: {e}"
 
 
 @app.route("/test")

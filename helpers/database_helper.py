@@ -2,7 +2,6 @@ import sqlalchemy as db
 import logging
 from helpers.config_helper import ConfigHelper
 
-
 config = ConfigHelper()
 
 
