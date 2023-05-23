@@ -16,6 +16,12 @@ def main():
     return results
 
 
+@app.route("/webhook", methods=['POST'])
+def webhook():
+    payload = request.data
+    return payload
+
+
 @app.route("/hello", methods=['POST'])
 @api_required
 def hello():
