@@ -25,8 +25,9 @@ def payload_cache():
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
-    payload = request.data
+    payload = request.json()
     PAYLOAD_CACHE['WEBHOOK'] = payload
+    return "Got payload"
 
 
 @app.route("/hello", methods=['POST'])
