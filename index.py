@@ -8,6 +8,8 @@ from helpers.request_helper import api_required
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler()])
 
+PAYLOAD_CACHE = {}
+
 
 @app.route("/")
 def main():
@@ -16,10 +18,15 @@ def main():
     return results
 
 
+@app.route("/payload_cache", methods=['GET'])
+def payload_cache():
+    return PAYLOAD_CACHE
+
+
 @app.route("/webhook", methods=['POST'])
 def webhook():
     payload = request.data
-    return payload
+    PAYLOAD_CACHE['WEBHOOK'] = payload
 
 
 @app.route("/hello", methods=['POST'])
