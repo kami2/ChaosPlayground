@@ -1,6 +1,5 @@
 import logging
 from flask import Flask, render_template, request
-from apps.test_import import TestImport
 from helpers.database_helper import DatabaseHelper
 from apps.ImageGenerator import ImageGenerator
 from helpers.request_helper import api_required
@@ -18,18 +17,6 @@ def main():
     return results
 
 
-@app.route("/payload_cache", methods=['GET'])
-def payload_cache():
-    return PAYLOAD_CACHE
-
-
-@app.route("/webhook", methods=['POST'])
-def webhook():
-    payload = request.get_json()
-    PAYLOAD_CACHE['WEBHOOK'] = payload
-    return "Got payload"
-
-
 @app.route("/hello", methods=['POST'])
 @api_required
 def hello():
@@ -40,19 +27,6 @@ def hello():
             return "Please provide your name"
     except Exception as e:
         return f"ERROR: {e}"
-
-
-@app.route("/test")
-def test_area():
-    TestImport("Did i make mistake?")
-    try:
-        conn = DatabaseHelper()
-        conn.test_connection()
-        msg = "Success"
-    except Exception as e:
-        return f"ERROR: {e}"
-
-    return msg
 
 
 @app.route("/create-image", methods=['POST'])
