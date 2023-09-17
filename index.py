@@ -1,6 +1,5 @@
 import logging
 from flask import Flask, render_template, request
-from helpers.database_helper import DatabaseHelper
 from apps.ImageGenerator import ImageGenerator
 from helpers.request_helper import api_required
 

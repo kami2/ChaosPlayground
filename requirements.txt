@@ -4,3 +4,4 @@ PyMySQL
 PyMySQL[rsa]
 python-dotenv
 openai
+PyDrive2

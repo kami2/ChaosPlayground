@@ -1,3 +1,5 @@
 .idea/
 /config.ini
 /.env
+/test_files
+/service_account_secrets.json
