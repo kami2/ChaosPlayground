@@ -8,7 +8,7 @@ class MetaHelper:
     def __init__(self):
         pass
 
-    # setup this shit is a nightmare
+    # setup this shit is a nightmare, do chuja to nie podobne no
 
 
 if __name__ == '__main__':
