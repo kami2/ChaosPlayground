@@ -1,8 +1,9 @@
 Flask
 requests
-sqlalchemy
+sqlalchemy==1.4
 PyMySQL
 PyMySQL[rsa]
 python-dotenv
 openai
 PyDrive2
+schedule
