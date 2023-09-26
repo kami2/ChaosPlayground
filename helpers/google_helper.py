@@ -6,12 +6,10 @@ import logging
 
 class GoogleHelper:
 
-    def __init__(self, credentials=None):
+    def __init__(self):
         self.config = ConfigHelper()
-        self.auth = None
-
-        if credentials is None:
-            self.auth = self.auth_service_account()
+        self.auth = self.auth_service_account()
+        self.drive = GoogleDrive(self.auth_service_account())
 
     def auth_service_account(self):
         """
@@ -36,8 +34,7 @@ class GoogleHelper:
         if dir_id is None:
             dir_id = self.config.get_config("GOOGLE_DRIVE_AI_IMAGES_DIRECTORY")
         try:
-            drive = GoogleDrive(self.auth_service_account())
-            file = drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": dir_id}]})
+            file = self.drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": dir_id}]})
             file.SetContentFile(filepath)
             file.Upload()
             logging.info(f"Uploaded file {file['title']} to google drive directory {dir_id}")
@@ -45,7 +42,16 @@ class GoogleHelper:
         except Exception as e:
             logging.info(f"Error {e}")
 
+    def is_file_exist(self, file_name: str):
+        logging.info(f"Looking for {file_name}")
+        search_file = self.drive.ListFile({'q': f"title='{file_name}'"}).GetList()
+        if search_file:
+            return True
+        else:
+            return False
+
 
 if __name__ == '__main__':
     gdrive = GoogleHelper()
-    gdrive.upload_file("./test_files/test_file.jpg")
+    # gdrive.upload_file("./test_files/test_file.jpg")
+    print(gdrive.is_file_exist("test_file.jpg"))

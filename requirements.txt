@@ -6,4 +6,4 @@ PyMySQL[rsa]
 python-dotenv
 openai
 PyDrive2
-schedule
+apscheduler
