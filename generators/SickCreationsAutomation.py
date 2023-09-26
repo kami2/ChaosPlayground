@@ -1,10 +1,11 @@
+import logging
 
 
 def post_image():
-    print("Posting image process")
+    logging.info("Posting image process")
 
 
 def create_image():
-    print("Creating image process")
+    logging.info("Creating image process")
 
 
