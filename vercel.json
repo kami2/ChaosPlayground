@@ -15,11 +15,15 @@
     "crons": [
         {
             "path": "/create_image",
-            "schedule": "*/5 * * * *"
+            "schedule": "0 8 * * *"
+        },
+        {
+            "path": "/create_image",
+            "schedule": "0 9 * * *"
         },
         {
             "path": "/post_image",
-            "schedule": "*/10 * * * *"
+            "schedule": "0 10 * * *"
         }
     ]
 }
