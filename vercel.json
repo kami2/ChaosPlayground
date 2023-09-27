@@ -11,5 +11,15 @@
             "src": "/(.*)",
             "dest": "/"
         }
+    ],
+    "crons": [
+        {
+            "path": "/create_image",
+            "schedule": "*/5 * * * *"
+        },
+        {
+            "path": "/post_image",
+            "schedule": "*/10 * * * *"
+        }
     ]
 }
