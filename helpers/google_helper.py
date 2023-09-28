@@ -50,8 +50,16 @@ class GoogleHelper:
         else:
             return False
 
+    def list_image_files(self):
+        directory = self.config.get_config('GOOGLE_DRIVE_AI_IMAGES_DIRECTORY')
+        logging.info(f"List all files in {directory}")
+        file_list = self.drive.ListFile({'q': f"'{directory}' in parents and trashed=false"}).GetList()
+        jpg_files = [file for file in file_list if file['title'].lower().endswith('.jpg')]
+        return jpg_files
+
 
 if __name__ == '__main__':
     gdrive = GoogleHelper()
     # gdrive.upload_file("./test_files/test_file.jpg")
-    print(gdrive.is_file_exist("test_file.jpg"))
+    # print(gdrive.is_file_exist("test_file.jpg"))
+    print(gdrive.list_image_files())
