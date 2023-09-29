@@ -61,7 +61,15 @@ class DatabaseHelper:
                            publishedDate=published_date,
                            prompts=prompts)
 
+    def is_img_exist(self, file_name: str):
+        query = f"SELECT image_name FROM creations WHERE image_name = '{file_name}'"
+        if self.execute_query(query):
+            return True
+        else:
+            return False
+
 
 if __name__ == '__main__':
     conn = DatabaseHelper()
-    conn.is_table_exist("creations")
+    # conn.test_connection()
+    conn.is_file_exist("test_file.jpg")
