@@ -38,7 +38,7 @@ def index_files():
             else:
                 logging.info(f"File already in db, skipping {file['title']}")
                 skipped += 1
-        return f"Updated: {updated}, Skipped: {skipped}, Indexed files: {image_list}"
+        return {"Updated": updated, "Skipped": skipped, "Indexed files": image_list}
 
     except Exception as e:
         logging.error(f"ERROR: {e}")
