@@ -19,13 +19,21 @@ class GoogleHelper:
 
         :return: google auth
         """
-
-        settings = {
-                    "client_config_backend": "service",
-                    "service_config": {
-                        "client_json_file_path": self.config.get_config("GOOGLE_SERVICE_ACCOUNT"),
-                    }
+        client_json_dict = {
+                    "type": "service_account",
+                    "project_id": self.config.get_config("GOOGLE_PROJECT_ID"),
+                    "client_id": self.config.get_config("GOOGLE_CLIENT_ID"),
+                    "client_email": self.config.get_config("GOOGLE_CLIENT_EMAIL"),
+                    "client_x509_cert_url": self.config.get_config("GOOOGLE_CLIENT_CERT_URL"),
+                    "private_key_id": self.config.get_config("GOOGLE_PRIVATE_KEY_ID"),
+                    "private_key": self.config.get_config("GOOGLE_PRIVATE_KEY")
                 }
+        settings = {
+            "client_config_backend": "service",
+            "service_config": {
+                "client_json_dict": client_json_dict
+            }
+        }
         gauth = GoogleAuth(settings=settings)
         gauth.ServiceAuth()
         return gauth

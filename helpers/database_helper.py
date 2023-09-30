@@ -1,6 +1,5 @@
 import sqlalchemy as db
 import logging
-from datetime import datetime
 from sqlalchemy.sql import text
 from helpers.config_helper import ConfigHelper
 
