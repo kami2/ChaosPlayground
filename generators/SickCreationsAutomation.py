@@ -4,11 +4,11 @@ from helpers.database_helper import DatabaseHelper
 
 
 def post_image():
-    return "Posting image process"
+    return "Posted images: not implemented yet"
 
 
 def create_image():
-    return "Creating image process"
+    return "Created images: not implemented yet"
 
 
 def index_files():
@@ -38,7 +38,7 @@ def index_files():
             else:
                 logging.info(f"File already in db, skipping {file['title']}")
                 skipped += 1
-        return {"Updated": updated, "Skipped": skipped, "Indexed files": image_list}
+        return f"Updated: {updated}, Skipped: {skipped}, Indexed files: {image_list}"
 
     except Exception as e:
         logging.error(f"ERROR: {e}")

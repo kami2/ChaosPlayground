@@ -2,6 +2,7 @@ import sqlalchemy as db
 import logging
 from sqlalchemy.sql import text
 from helpers.config_helper import ConfigHelper
+from datetime import datetime
 
 config = ConfigHelper()
 
@@ -18,7 +19,7 @@ class DatabaseHelper:
     def test_connection(self):
         try:
             if not self.is_table_exist("creations"):
-                logging.info("Creating table...")
+                logging.info("Creating table creations...")
                 self._conn.execute("CREATE TABLE creations "
                                    "(id VARCHAR(255),"
                                    "imageName VARCHAR(255),"
@@ -29,11 +30,33 @@ class DatabaseHelper:
                                    "publishedDate DATETIME,"
                                    "prompt VARCHAR(1000),"
                                    "PRIMARY KEY (id));")
+            elif not self.is_table_exist("events"):
+                self._conn.execute("CREATE TABLE events "
+                                   "(id INT AUTO_INCREMENT,"
+                                   "date DATETIME,"
+                                   "event_name VARCHAR(50),"
+                                   "results VARCHAR(600),"
+                                   "PRIMARY KEY (id));")
             else:
-                logging.info("Table already exist")
+                logging.info("Tables already exist")
         except Exception as e:
             logging.error("Cannot connect to db")
             raise e
+
+    def get_events_list(self):
+        sql_select = "SELECT * FROM events"
+        results = self.execute_query(sql_select)
+        if results.rowcount >= 1:
+            return results.fetchall()
+        else:
+            return []
+
+    def add_event(self, event_name, results):
+        sql_insert = """
+                     INSERT INTO events (date, event_name, results)
+                     VALUES (:date, :event_name, :results)
+                     """
+        self.execute_query(sql_insert, date=datetime.now(), event_name=event_name, results=str(results))
 
     def is_table_exist(self, table_name: str) -> bool:
         if db.inspect(self._engine).has_table(table_name):
@@ -75,4 +98,3 @@ class DatabaseHelper:
 if __name__ == '__main__':
     conn = DatabaseHelper()
     # conn.test_connection()
-    print(conn.is_img_exist("1sLt6oPAFyXn9AjgjHtfM8vS-U1hmm9TM"))
