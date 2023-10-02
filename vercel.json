@@ -14,11 +14,11 @@
     ],
     "crons": [
         {
-            "path": "/create_image?api_key=$API_KEY",
+            "path": "/create_image?api_key=<API_KEY>",
             "schedule": "0 8 * * *"
         },
         {
-            "path": "/post_image?api_key=$API_KEY",
+            "path": "/post_image?api_key=<API_KEY>",
             "schedule": "30 8 * * *"
         }
     ]
