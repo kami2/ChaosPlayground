@@ -15,9 +15,11 @@ def api_required(func):
     def decorator(*args, **kwargs):
         if request.headers and "api_key" in request.headers:
             api_key = request.headers.get("api_key")
+        elif request.args.get("api_key"):
+            api_key = request.args.get("api_key")
         else:
             return {"message": "Please provide an API key"}, 400
-        if request.method == "POST" and is_valid(api_key):
+        if is_valid(api_key):
             return func(*args, **kwargs)
         else:
             return {"message": "The provided API key is not valid"}, 403

@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, render_template
 from generators.SickCreationsAutomation import post_image, create_image, index_files
+from helpers.request_helper import api_required
 from helpers.database_helper import DatabaseHelper
 
 app = Flask(__name__)
@@ -17,18 +18,21 @@ def main():
 
 
 @app.route("/post_image", methods=['GET'])
+@api_required
 def schedule_post_image():
     db.add_event(event_name="post_image", results=post_image())
     return "Image posted"
 
 
 @app.route("/create_image", methods=['GET'])
+@api_required
 def schedule_create_image():
     db.add_event(event_name="create_image", results=create_image())
     return "Image created"
 
 
 @app.route("/index_file", methods=['GET'])
+@api_required
 def index_file():
     db.add_event(event_name="index_file", results=index_files())
     return "Database updated"
