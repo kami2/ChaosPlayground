@@ -6,21 +6,22 @@ config = ConfigHelper()
 
 
 def is_valid(api_key):
-    if api_key == config.get_config("API_KEY"):
+    if api_key == config.get_config("CRON_SECRET"):
         return True
 
 
 def api_required(func):
     @functools.wraps(func)
     def decorator(*args, **kwargs):
-        if request.headers and "api_key" in request.headers:
-            api_key = request.headers.get("api_key")
-        elif request.args.get("api_key"):
-            api_key = request.args.get("api_key")
-        else:
-            return {"message": "Please provide an API key"}, 400
+        authorization_header = request.headers.get("Authorization")
+        if authorization_header is None or not authorization_header.startswith("Bearer "):
+            return {"message": "Invalid or missing Authorization header"}, 401
+
+        api_key = authorization_header.split(" ")[1]
+
         if is_valid(api_key):
             return func(*args, **kwargs)
         else:
-            return {"message": "The provided API key is not valid"}, 403
+            return {"message": "The provided CRON_SECRET is not valid"}, 403
+
     return decorator
