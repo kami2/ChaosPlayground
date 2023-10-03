@@ -22,6 +22,6 @@ def api_required(func):
         if is_valid(api_key):
             return func(*args, **kwargs)
         else:
-            return {"message": "The provided CRON_SECRET is not valid"}, 403
+            return {"message": "The provided access token is not valid"}, 403
 
     return decorator

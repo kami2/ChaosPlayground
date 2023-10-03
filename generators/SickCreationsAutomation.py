@@ -4,6 +4,11 @@ from helpers.database_helper import DatabaseHelper
 
 
 def post_image():
+    logging.info("Posting image process...")
+    # TODO :
+    #  1. Find info in database about the oldest not published and not deleted image
+    #  2. Check if that file exist on gdrive, if not set isDeleted to true
+    #  3. Post image to instagram and set isPublished and update published date
     return "Posted images: not implemented yet"
 
 
