@@ -95,8 +95,8 @@ class DatabaseHelper:
             return False
 
     def get_the_latest_file(self):
-        query = "SELECT * FROM creations WHERE isPublished IS FALSE AND isDeleted IS FALSE ORDER BY createdDate ASC"
-        return self.execute_query(query).fetchall()[0]
+        query = "SELECT * FROM creations WHERE isPublished IS FALSE AND isDeleted IS FALSE ORDER BY createdDate ASC LIMIT 1"
+        return self.execute_query(query).fetchall()
 
     def set_deleted(self, image_id: str):
         query = f"UPDATE creations SET isDeleted = TRUE WHERE id = '{image_id}'"
@@ -110,4 +110,4 @@ class DatabaseHelper:
 if __name__ == '__main__':
     conn = DatabaseHelper()
     # conn.test_connection()
-    conn.get_the_latest_file()
+    print(conn.get_the_latest_file())

@@ -4,11 +4,29 @@ from helpers.database_helper import DatabaseHelper
 
 
 def post_image():
-    logging.info("Posting image process...")
+    logging.info("Posting image process")
+    try:
+        logging.info("Initializing GoogleHelper")
+        gdrive = GoogleHelper()
+        logging.info("Initializing DatabaseHelper")
+        db = DatabaseHelper()
+        while True:
+            latest_file = db.get_the_latest_file()
+            if len(latest_file) > 0:
+                if not gdrive.is_file_exist(latest_file[0]['imageName']):
+                    db.set_deleted(latest_file[0]['id'])
+            else:
+                logging.info("There is no image to publish")
+                break
+
+    except Exception as e:
+        logging.info(f"ERROR: {e}")
+
     # TODO :
     #  1. Find info in database about the oldest not published and not deleted image
     #  2. Check if that file exist on gdrive, if not set isDeleted to true
     #  3. Post image to instagram and set isPublished and update published date
+
     return "Posted images: not implemented yet"
 
 

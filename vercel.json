@@ -18,7 +18,7 @@
             "schedule": "0 8 * * *"
         },
         {
-            "path": "/post_image",
+            "path": "/index_file",
             "schedule": "30 8 * * *"
         }
     ]
