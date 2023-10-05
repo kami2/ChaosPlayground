@@ -24,7 +24,7 @@ def post_image():
                     image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption="#ai #isometric #gamedesign #automation")
                     if image.status_code == 200:
                         db.set_published(latest_file[0]['id'])
-                        return {'Posted status': image.status_code, "Instagram post id": image.json()['id']}
+                        return {'Status': image.status_code, "Instagram post id": image.json()['id']}
             else:
                 logging.info("There is no image to publish")
                 break
