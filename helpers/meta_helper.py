@@ -29,7 +29,7 @@ class MetaHelper:
             "creation_id": self.upload_image(image_url=image_url, caption=caption)
         }
         response = requests.post(f"{self.url}/media_publish", params=params)
-        return response.json()
+        return response
 
 
 if __name__ == '__main__':

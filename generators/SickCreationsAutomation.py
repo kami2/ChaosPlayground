@@ -1,6 +1,7 @@
 import logging
 from helpers.google_helper import GoogleHelper
 from helpers.database_helper import DatabaseHelper
+from helpers.meta_helper import MetaHelper
 
 
 def post_image():
@@ -10,24 +11,26 @@ def post_image():
         gdrive = GoogleHelper()
         logging.info("Initializing DatabaseHelper")
         db = DatabaseHelper()
+        logging.info("Initializing MetaHelper")
+        meta = MetaHelper("INSTAGRAM_ACCOUNT_ID")
         while True:
             latest_file = db.get_the_latest_file()
             if len(latest_file) > 0:
                 if not gdrive.is_file_exist(latest_file[0]['imageName']):
                     db.set_deleted(latest_file[0]['id'])
+                    continue
+                else:
+                    logging.info(f"Post image {latest_file[0]['imageName']}")
+                    image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption="#ai #isometric #gamedesign #automation")
+                    if image.status_code == 200:
+                        db.set_published(latest_file[0]['id'])
+                        return {'Posted status': image.status_code, "Instagram post id": image.json()['id']}
             else:
                 logging.info("There is no image to publish")
                 break
 
     except Exception as e:
         logging.info(f"ERROR: {e}")
-
-    # TODO :
-    #  1. Find info in database about the oldest not published and not deleted image
-    #  2. Check if that file exist on gdrive, if not set isDeleted to true
-    #  3. Post image to instagram and set isPublished and update published date
-
-    return "Posted images: not implemented yet"
 
 
 def create_image():
@@ -52,7 +55,7 @@ def index_files():
                                    is_deleted=False,
                                    is_published=False,
                                    created_date=file["createdDate"],
-                                   url=file['downloadUrl'],
+                                   url=file['webContentLink'],
                                    published_date='',
                                    prompts='')
                 image_list.append(file['title'])
@@ -68,4 +71,4 @@ def index_files():
 
 
 if __name__ == '__main__':
-    index_files()
+    post_image()
