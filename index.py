@@ -1,5 +1,5 @@
 import logging
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from generators.SickCreationsAutomation import post_image, create_image, index_files
 from helpers.request_helper import api_required
 from helpers.database_helper import DatabaseHelper
@@ -42,6 +42,13 @@ def index_file():
 def event_store():
     results = render_template("events.html", events=db.get_events_list())
     return results
+
+
+@app.route("/add_event", methods=['POST'])
+@api_required
+def add_event():
+    db.add_event(event_name="Remote event", results=request.get_json())
+    return "Event Added"
 
 
 if __name__ == '__main__':

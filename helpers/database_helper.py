@@ -44,7 +44,7 @@ class DatabaseHelper:
             raise e
 
     def get_events_list(self):
-        sql_select = "SELECT * FROM events ORDER BY date DESC"
+        sql_select = "SELECT * FROM events ORDER BY date DESC LIMIT 30"
         results = self.execute_query(sql_select)
         if results.rowcount >= 1:
             return results.fetchall()
@@ -56,7 +56,7 @@ class DatabaseHelper:
                      INSERT INTO events (date, event_name, results)
                      VALUES (:date, :event_name, :results)
                      """
-        self.execute_query(sql_insert, date=datetime.now(), event_name=event_name, results=str(results))
+        self.execute_query(sql_insert, date=datetime.now(), event_name=str(event_name), results=str(results))
 
     def is_table_exist(self, table_name: str) -> bool:
         if db.inspect(self._engine).has_table(table_name):
