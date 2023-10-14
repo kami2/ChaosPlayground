@@ -44,7 +44,7 @@ class DatabaseHelper:
             raise e
 
     def get_events_list(self):
-        sql_select = "SELECT * FROM events ORDER BY date DESC LIMIT 30"
+        sql_select = "SELECT * FROM events ORDER BY date DESC LIMIT 100"
         results = self.execute_query(sql_select)
         if results.rowcount >= 1:
             return results.fetchall()
