@@ -44,12 +44,5 @@ def event_store():
     return results
 
 
-@app.route("/add_event", methods=['POST'])
-@api_required
-def add_event():
-    db.add_event(event_name="Remote event", results=request.get_json())
-    return "Event Added"
-
-
 if __name__ == '__main__':
     app.run()
