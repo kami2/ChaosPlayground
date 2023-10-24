@@ -1,7 +1,7 @@
 import logging
 from helpers.google_helper import GoogleHelper
 from helpers.database_helper import DatabaseHelper
-from helpers.meta_helper import MetaHelper
+from helpers.meta_helper import InstaHelper
 
 
 def post_image():
@@ -11,8 +11,8 @@ def post_image():
         gdrive = GoogleHelper()
         logging.info("Initializing DatabaseHelper")
         db = DatabaseHelper()
-        logging.info("Initializing MetaHelper")
-        meta = MetaHelper("INSTAGRAM_ACCOUNT_ID")
+        logging.info("Initializing InstaHelper")
+        meta = InstaHelper()
         while True:
             latest_file = db.get_the_latest_file()
             if len(latest_file) > 0:
