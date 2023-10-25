@@ -24,7 +24,7 @@ class GoogleHelper:
                     "project_id": self.config.get_config("GOOGLE_PROJECT_ID"),
                     "client_id": self.config.get_config("GOOGLE_CLIENT_ID"),
                     "client_email": self.config.get_config("GOOGLE_CLIENT_EMAIL"),
-                    "client_x509_cert_url": self.config.get_config("GOOOGLE_CLIENT_CERT_URL"),
+                    "client_x509_cert_url": self.config.get_config("GOOGLE_CLIENT_CERT_URL"),
                     "private_key_id": self.config.get_config("GOOGLE_PRIVATE_KEY_ID"),
                     "private_key": self.config.get_config("GOOGLE_PRIVATE_KEY")
                 }
