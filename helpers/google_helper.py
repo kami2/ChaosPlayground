@@ -1,7 +1,10 @@
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 from helpers.config_helper import ConfigHelper
+
 import logging
+import requests
+import os
 
 
 class GoogleHelper:
@@ -38,13 +41,20 @@ class GoogleHelper:
         gauth.ServiceAuth()
         return gauth
 
-    def upload_file(self, filepath: str, dir_id: str = None):
+    def upload_file(self,  file_url: str = None, dir_id: str = None):
+        filepath = None
         if dir_id is None:
             dir_id = self.config.get_config("GOOGLE_DRIVE_AI_IMAGES_DIRECTORY")
         try:
             file = self.drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": dir_id}]})
+            response = requests.get(file_url)
+            if response.status_code == 200:
+                filepath = f"{self.config.get_cache_dir()}/{os.path.basename(file_url)}"
+                with open(filepath, "wb") as temp_file:
+                    temp_file.write(response.content)
             file.SetContentFile(filepath)
             file.Upload()
+            os.remove(filepath)
             logging.info(f"Uploaded file {file['title']} to google drive directory {dir_id}")
             return file['title']
         except Exception as e:
@@ -68,6 +78,6 @@ class GoogleHelper:
 
 if __name__ == '__main__':
     gdrive = GoogleHelper()
-    # gdrive.upload_file("./test_files/test_file.jpg")
+    gdrive.upload_file(file_url="https://www.cycleworld.com/resizer/LMEvu6iUityTUyeJhHOeBG-p7so=/1333x2000/filters:focal(688x939:698x949)/cloudfront-us-east-1.images.arcpublishing.com/octane/OHX4SBP2XFDSPMDR5DJLE6YXPE.jpg")
     # print(gdrive.is_file_exist("test_file.jpg"))
-    print(gdrive.list_image_files())
+    # print(gdrive.list_image_files())

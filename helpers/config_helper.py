@@ -23,3 +23,10 @@ class ConfigHelper:
         else:
             logging.info(f"Get environment variable {key}")
         return os.environ.get(key)
+
+    @staticmethod
+    def get_cache_dir():
+        if not os.path.exists("cache"):
+            os.makedirs("cache")
+
+        return "cache"

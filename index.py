@@ -51,5 +51,12 @@ def add_event():
     return "Event Added"
 
 
+@app.route("/upload_to_gdrive", methods=['POST'])
+@api_required
+def upload_to_gdrive():
+    db.add_event(event_name="Upload file", results=request.get_json())
+    return "File uploaded to gdrive"
+
+
 if __name__ == '__main__':
     app.run()
