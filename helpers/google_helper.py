@@ -5,6 +5,7 @@ from helpers.config_helper import ConfigHelper
 import logging
 import requests
 import os
+import io
 
 
 class GoogleHelper:
@@ -42,19 +43,20 @@ class GoogleHelper:
         return gauth
 
     def upload_file(self,  file_url: str = None, dir_id: str = None):
-        filepath = None
         if dir_id is None:
             dir_id = self.config.get_config("GOOGLE_DRIVE_AI_IMAGES_DIRECTORY")
         try:
-            file = self.drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": dir_id}]})
+            metadata = {
+                "parents": [{"kind": "drive#fileLink", "id": dir_id}],
+                'title':  os.path.basename(file_url),
+                'mimeType': 'image/jpg'
+            }
+            file = self.drive.CreateFile(metadata=metadata)
             response = requests.get(file_url)
             if response.status_code == 200:
-                filepath = f"{self.config.get_cache_dir()}/{os.path.basename(file_url)}"
-                with open(filepath, "wb") as temp_file:
-                    temp_file.write(response.content)
-            file.SetContentFile(filepath)
-            file.Upload()
-            os.remove(filepath)
+                image_file = io.BytesIO(response.content)
+                file.content = image_file
+                file.Upload()
             logging.info(f"Uploaded file {file['title']} to google drive directory {dir_id}")
             return file['title']
         except Exception as e:
