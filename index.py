@@ -3,6 +3,7 @@ from flask import Flask, render_template, request
 from generators.SickCreationsAutomation import post_image, create_image, index_files
 from helpers.request_helper import api_required
 from helpers.database_helper import DatabaseHelper
+from helpers.google_helper import GoogleHelper
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler()])
@@ -54,8 +55,11 @@ def add_event():
 @app.route("/upload_to_gdrive", methods=['POST'])
 @api_required
 def upload_to_gdrive():
-    db.add_event(event_name="Upload file", results=request.get_json())
-    return "File uploaded to gdrive"
+    payload = request.get_json()
+    db.add_event(event_name="Upload file", results=payload)
+    gdrive = GoogleHelper()
+    uploaded_image = gdrive.upload_file(payload['file_url'])
+    return f"File uploaded to gdrive {uploaded_image}"
 
 
 if __name__ == '__main__':
