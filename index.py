@@ -56,9 +56,10 @@ def add_event():
 @api_required
 def upload_to_gdrive():
     payload = request.get_json()
-    db.add_event(event_name="Upload file", results=payload)
     gdrive = GoogleHelper()
     uploaded_image = gdrive.upload_file(payload['file_url'])
+    if uploaded_image:
+        db.add_event(event_name="Upload file from url", results=payload)
     return f"File uploaded to gdrive {uploaded_image}"
 
 
