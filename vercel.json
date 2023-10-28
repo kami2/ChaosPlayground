@@ -14,10 +14,6 @@
     ],
     "crons": [
         {
-            "path": "/create_image",
-            "schedule": "0 8 * * *"
-        },
-        {
             "path": "/index_file",
             "schedule": "30 8 * * *"
         }

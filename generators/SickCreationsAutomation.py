@@ -33,8 +33,17 @@ def post_image():
         logging.info(f"ERROR: {e}")
 
 
-def create_image():
-    return "Created images: not implemented yet"
+def process_generated_image(payload: dict):
+    logging.info("Processing image")
+    try:
+        logging.info("Initializing GoogleHelper")
+        gdrive = GoogleHelper()
+        logging.info("Initializing DatabaseHelper")
+        db = DatabaseHelper()
+    # TODO Get generated image data from payload, use file_url to upload file to gdrive, then add info about image to database,then log event by add_event func
+    except Exception as e:
+        logging.info(f"ERROR: {e}")
+    return {"Image processed"}
 
 
 def index_files():

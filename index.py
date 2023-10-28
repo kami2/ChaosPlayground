@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, render_template, request
-from generators.SickCreationsAutomation import post_image, create_image, index_files
+from generators.SickCreationsAutomation import post_image, index_files, process_generated_image
 from helpers.request_helper import api_required
 from helpers.database_helper import DatabaseHelper
 from helpers.google_helper import GoogleHelper
@@ -25,13 +25,6 @@ def schedule_post_image():
     return "Image posted"
 
 
-@app.route("/create_image", methods=['GET'])
-@api_required
-def schedule_create_image():
-    db.add_event(event_name="create_image", results=create_image())
-    return "Image created"
-
-
 @app.route("/index_file", methods=['GET'])
 @api_required
 def index_file():
@@ -43,6 +36,17 @@ def index_file():
 def event_store():
     results = render_template("events.html", events=db.get_events_list())
     return results
+
+
+@app.route("/process_generated_image", methods=['POST'])
+@api_required
+def process_generated_image():
+    try:
+        payload = request.get_json()
+        results = process_generated_image(payload)
+        return f"Image processed: {results}"
+    except Exception as e:
+        return f"FAILED : {e}"
 
 
 @app.route("/add_event", methods=['POST'])
