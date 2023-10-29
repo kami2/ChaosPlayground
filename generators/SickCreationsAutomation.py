@@ -40,7 +40,16 @@ def process_generated_image(payload: dict):
         gdrive = GoogleHelper()
         logging.info("Initializing DatabaseHelper")
         db = DatabaseHelper()
-    # TODO Get generated image data from payload, use file_url to upload file to gdrive, then add info about image to database,then log event by add_event func
+        file_id, file_title = gdrive.upload_file(payload['file_url'])
+        db.insert_img_data(img_id=file_id,
+                           image_name=file_title,
+                           is_deleted=False,
+                           is_published=False,
+                           created_date=payload["created_at"],
+                           url=payload['file_url'],
+                           published_date='',
+                           prompts=payload['prompt'])
+        db.add_event("process_generated_image", results=f"processed {file_id} | {file_title}")
     except Exception as e:
         logging.info(f"ERROR: {e}")
     return {"Image processed"}

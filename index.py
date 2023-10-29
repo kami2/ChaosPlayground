@@ -40,7 +40,7 @@ def event_store():
 
 @app.route("/process_generated_image", methods=['POST'])
 @api_required
-def process_generated_image():
+def worker_generated_image():
     try:
         payload = request.get_json()
         results = process_generated_image(payload)

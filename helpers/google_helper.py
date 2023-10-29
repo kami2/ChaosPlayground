@@ -43,6 +43,7 @@ class GoogleHelper:
         return gauth
 
     def upload_file(self,  file_url: str = None, dir_id: str = None):
+        logging.info(f"Uploading file : {file_url}")
         if dir_id is None:
             dir_id = self.config.get_config("GOOGLE_DRIVE_AI_IMAGES_DIRECTORY")
         try:
@@ -58,7 +59,7 @@ class GoogleHelper:
                 file.content = image_file
                 file.Upload()
             logging.info(f"Uploaded file {file['title']} to google drive directory {dir_id}")
-            return file['title']
+            return file['id'], file['title']
         except Exception as e:
             logging.info(f"Error {e}")
 

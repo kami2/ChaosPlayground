@@ -103,11 +103,13 @@ class DatabaseHelper:
         return self.execute_query(query)
 
     def set_published(self, image_id: str):
-        query = f"UPDATE creations SET isPublished = TRUE WHERE id = '{image_id}'"
+        current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        query = f"UPDATE creations SET isPublished = TRUE, publishedDate = '{current_date}' WHERE id = '{image_id}'"
         return self.execute_query(query)
 
 
 if __name__ == '__main__':
     conn = DatabaseHelper()
     # conn.test_connection()
-    print(conn.get_the_latest_file())
+    # print(conn.get_the_latest_file())
+    conn.set_published("1a1AlhQbvmvFd6iEwPIgoq-i42d6pLp2q")
