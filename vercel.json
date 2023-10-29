@@ -14,7 +14,7 @@
     ],
     "crons": [
         {
-            "path": "/index_file",
+            "path": "/post_image",
             "schedule": "30 8 * * *"
         }
     ]
