@@ -21,7 +21,10 @@ def post_image():
                     continue
                 else:
                     logging.info(f"Post image {latest_file[0]['imageName']}")
-                    image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption="#ai #isometric #gamedesign #automation")
+                    caption = "#ai #isometric #gamedesign #automation"
+                    if latest_file[0]['prompt']:
+                        caption = latest_file[0]['prompt'].split(".", 1)[0]
+                    image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption=caption)
                     if image.status_code == 200:
                         db.set_published(latest_file[0]['id'])
                         return {'Status': image.status_code, "Instagram post id": image.json()['id']}
@@ -89,4 +92,4 @@ def index_files():
 
 
 if __name__ == '__main__':
-    post_image()
+    index_files()
