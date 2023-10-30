@@ -59,7 +59,7 @@ class GoogleHelper:
                 file.content = image_file
                 file.Upload()
             logging.info(f"Uploaded file {file['title']} to google drive directory {dir_id}")
-            return file['id'], file['title']
+            return file['id'], file['title'], file['webContentLink']
         except Exception as e:
             logging.info(f"Error {e}")
 

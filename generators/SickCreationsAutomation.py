@@ -40,13 +40,13 @@ def process_generated_image(payload: dict):
         gdrive = GoogleHelper()
         logging.info("Initializing DatabaseHelper")
         db = DatabaseHelper()
-        file_id, file_title = gdrive.upload_file(payload['file_url'])
+        file_id, file_title, file_url = gdrive.upload_file(payload['file_url'])
         db.insert_img_data(img_id=file_id,
                            image_name=file_title,
                            is_deleted=False,
                            is_published=False,
                            created_date=payload["created_at"],
-                           url=payload['file_url'],
+                           url=file_url,
                            published_date='',
                            prompts=payload['prompt'])
         db.add_event("process_generated_image", results=f"processed {file_id} | {file_title}")
