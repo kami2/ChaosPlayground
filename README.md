@@ -1,5 +1,7 @@
 # Instagram account https://www.instagram.com/ai.isometric.creations/
 
+## Worker service https://github.com/kami2/smallworker
+
 ## Process flow:
   ![ai creations](https://github.com/kami2/ChaosPlayground/assets/23418277/675c966f-0c3f-4fac-9e06-f8ebe900c62d)
 
