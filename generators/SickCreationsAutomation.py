@@ -21,9 +21,9 @@ def post_image():
                     continue
                 else:
                     logging.info(f"Post image {latest_file[0]['imageName']}")
-                    caption = "#ai #isometric #gamedesign #automation"
+                    caption = " #ai #isometric #history #architecture #art #buildings #historyfacts #automation"
                     if latest_file[0]['prompt']:
-                        caption = latest_file[0]['prompt'].split(".", 1)[0]
+                        caption = latest_file[0]['prompt'].split(".", 1)[0] + caption
                     image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption=caption)
                     if image.status_code == 200:
                         db.set_published(latest_file[0]['id'])
