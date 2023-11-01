@@ -21,7 +21,7 @@ def main():
 @app.route("/post_image", methods=['GET'])
 @api_required
 def schedule_post_image():
-    db.add_event(event_name="post_image", results=post_image())
+    post_image()
     return "Image posted"
 
 
