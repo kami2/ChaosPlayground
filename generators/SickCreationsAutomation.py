@@ -25,9 +25,8 @@ def post_image():
                     if latest_file[0]['prompt']:
                         caption = latest_file[0]['prompt'].split(".", 1)[0] + caption
                     image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption=caption)
-                    if image.status_code == 200:
-                        db.set_published(latest_file[0]['id'])
-                        return db.add_event(event_name="post_image", results=f"Status: {image.status_code}, Instagram post id: {image.json()['id']}")
+                    db.set_published(latest_file[0]['id'])
+                    return db.add_event(event_name="post_image", results=f"Status: {image.status_code}, Instagram post id: {image.json()['id']}")
             else:
                 logging.info("There is no image to publish")
                 break
