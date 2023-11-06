@@ -21,11 +21,11 @@ def post_image():
                     continue
                 else:
                     logging.info(f"Post image {latest_file[0]['imageName']}")
+                    db.set_published(latest_file[0]['id'])
                     caption = " #ai #isometric #history #architecture #art #buildings #historyfacts #automation"
                     if latest_file[0]['prompt']:
                         caption = latest_file[0]['prompt'].split(".", 1)[0] + caption
                     image = meta.post_image_on_instagram(image_url=latest_file[0]['url'], caption=caption)
-                    db.set_published(latest_file[0]['id'])
                     return db.add_event(event_name="post_image", results=f"Status: {image.status_code}, Instagram post id: {image.json()['id']}")
             else:
                 logging.info("There is no image to publish")
@@ -91,4 +91,4 @@ def index_files():
 
 
 if __name__ == '__main__':
-    index_files()
+    post_image()
